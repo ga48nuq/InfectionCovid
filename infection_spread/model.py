@@ -60,19 +60,19 @@ class InfectionModel(Model):
             value = str(value)
             floor_object = None
 
-            if value is "W":
+            if value == "W":
                 floor_object = Wall((x, y), self)
 
-            elif value is "E":
+            elif value == "E":
                 floor_object = Exit((x, y), self)
                 self.exit_list.append((x, y))
                 self.door_list.append((x, y))  # Add exits to doors as well
 
-            elif value is "D":
+            elif value == "D":
                 floor_object = Door((x, y), self)
                 self.door_list.append((x, y))
 
-            elif value is "S":
+            elif value == "S":
                 self.spawn_list.append((x, y))
 
             if floor_object:
