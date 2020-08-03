@@ -17,7 +17,7 @@ class InfectionModel(Model):
     """A model for infection spread."""
 
     def __init__(self, human_count, random_spawn, save_plots, 
-            floor_plan_file="floorplan_1.txt", N=10, width=10, height=10, ptrans=0.5, 
+            floor_plan_file="floorplan_1.txt", N=30, width=10, height=10, ptrans=0.5, 
             progression_period=3, progression_sd=2, death_rate=0.0193, recovery_days=21, 
             recovery_sd=7):
         # Load floorplan
@@ -89,7 +89,7 @@ class InfectionModel(Model):
                 neighbors = self.grid.get_neighborhood(pos, moore=True, include_center=True, radius=1)
 
                 for neighbor in neighbors:
-                    # If there is contents at this location and they are not Doors or FireExits, skip them
+                    # If there is contents at this location and they are not Doors or Exits, skip them
                     if not self.grid.is_cell_empty(neighbor) and neighbor not in self.door_list:
                         continue
 
@@ -107,15 +107,24 @@ class InfectionModel(Model):
              #   health = random.randint(self.MIN_HEALTH * 100, self.MAX_HEALTH * 100) / 100
               #  speed = random.randint(self.MIN_SPEED, self.MAX_SPEED)
 
-        for i in range(self.num_agents):
+        for i in range(0, self.num_agents):
             a = Human(unique_id=i, model=self)
             self.schedule.add(a)
             # Add the agent to a random grid cell
-            x = self.random.randrange(self.grid.width)
-            y = self.random.randrange(self.grid.height)
-            self.grid.place_agent(a, (x, y))
+            # x = self.random.randrange(self.grid.width)
+            # y = self.random.randrange(self.grid.height)
+            # self.grid.place_agent(a, (x, y))
+
+            if self.random_spawn:  # Place human agents randomly
+                pos = self.grid.find_empty()
+            else:  # Place human agents at specified spawn locations
+                pos = random.choice(self.spawn_list)
+
+            self.grid.place_agent(a, pos)
+
+
             #make some agents infected at start
-            infected = np.random.choice([0,1], p=[0.98,0.02])
+            infected = np.random.choice([0,1], 1, p=[0.98,0.02])
             if infected == 1:
                 a.state = State.INFECTED
                 a.recovery_time = self.get_recovery_time()
@@ -139,7 +148,7 @@ def get_column_data(model):
         #pivot the model dataframe to get states count at each step
     agent_state = model.datacollector.get_agent_vars_dataframe()
     X = pd.pivot_table(agent_state.reset_index(),index='Step',columns='State',aggfunc=np.size,fill_value=0)    
-    labels = ['Susceptible','Infected','Recovered']
+    labels = ['Susceptible','Infected','Removed']
     X.columns = labels[:len(X.columns)]
     return X
     

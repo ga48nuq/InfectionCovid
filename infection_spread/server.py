@@ -43,7 +43,7 @@ canvas_element = CanvasGrid(infection_spread_portrayal, 50, 50, 800, 800)
 # Define the charts on our web interface visualisation
 status_chart = ChartModule([{"Label": "Susceptible", "Color": "blue"},
                             {"Label": "Infected", "Color": "red"},
-                            {"Label": "Recovered", "Color": "green"}])
+                            {"Label": "Removed", "Color": "green"}])
 
 # Get list of available floorplans
 floor_plans = [f for f in listdir("infection_spread/floorplans") if path.isfile(path.join("infection_spread/floorplans", f))]

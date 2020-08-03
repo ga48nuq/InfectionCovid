@@ -16,7 +16,7 @@ from mesa.datacollection import DataCollector
 class State(enum.IntEnum):
     SUSCEPTIBLE = 0
     INFECTED = 1
-    RECOVERED = 2
+    REMOVED = 2
     NA = 3
 
 
@@ -52,7 +52,7 @@ class Human(Agent):
                 self.model.schedule.remove(self)            
             t = self.model.schedule.time-self.infection_time
             if t >= self.recovery_time:          
-                self.state = State.RECOVERED
+                self.state = State.REMOVED
             #print (self.model.schedule.time,self.recovery_time,t)
 
     def contact(self):
