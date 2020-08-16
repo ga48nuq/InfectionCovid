@@ -20,6 +20,11 @@ def infection_spread_portrayal(agent):
         portrayal["scale"] = 1
         portrayal["Layer"] = 5
 
+    # elif type(agent) is Human.Infected:
+    #     portrayal["Shape"] = "infection_spread/resources/human_infect.png"
+    #     portrayal["scale"] = 1
+    #     portrayal["Layer"] = 5    
+
     elif type(agent) is Exit:
         portrayal["Shape"] = "infection_spread/resources/exit.png"
         portrayal["scale"] = 1
