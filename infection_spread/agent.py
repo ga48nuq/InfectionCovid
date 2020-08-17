@@ -32,6 +32,7 @@ class Human(Agent):
 
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
+        self.traversable = False
         self.age = self.random.normalvariate(20,40)        
         self.state = State.SUSCEPTIBLE  
         self.infection_time = 0
@@ -77,7 +78,16 @@ class Human(Agent):
                     other.state = State.INFECTED
                     other.infection_time = self.model.schedule.time
                     other.recovery_time = model.get_recovery_time()
-                
+
+    def location_is_traversable(self, pos):
+        if not self.model.grid.is_cell_empty(pos):
+            contents = self.model.grid.get_cell_list_contents(pos)
+            for agent in contents:
+                if not agent.traversable:
+                    return False
+
+        return True                
+
     def step(self):
         self.status()
         self.move()
