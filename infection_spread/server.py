@@ -16,14 +16,14 @@ def infection_spread_portrayal(agent):
     portrayal["y"] = y
 
     if type(agent) is Human:
-        portrayal["Shape"] = "infection_spread/resources/human.png"
         portrayal["scale"] = 1
         portrayal["Layer"] = 5
 
-    # elif type(agent) is Human.Infected:
-    #     portrayal["Shape"] = "infection_spread/resources/human_infect.png"
-    #     portrayal["scale"] = 1
-    #     portrayal["Layer"] = 5    
+        if agent.status() == Human.State.INFECTED:  # Infected
+            portrayal["Shape"] = "infection_spread/resources/human_infect.png"    
+        else:  # Suseptible
+            portrayal["Shape"] = "infection_spread/resources/human.png"
+
 
     elif type(agent) is Exit:
         portrayal["Shape"] = "infection_spread/resources/exit.png"

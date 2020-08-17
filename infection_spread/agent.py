@@ -22,6 +22,14 @@ class State(enum.IntEnum):
 
 class Human(Agent):
     """ An agent in an epidemic model."""
+
+    class State(enum.IntEnum):
+        SUSCEPTIBLE = 0
+        INFECTED = 1
+        REMOVED = 2
+        NA = 3
+
+
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
         self.age = self.random.normalvariate(20,40)        
