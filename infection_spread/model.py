@@ -148,7 +148,7 @@ def get_column_data(model):
         #pivot the model dataframe to get states count at each step
     agent_state = model.datacollector.get_agent_vars_dataframe()
     X = pd.pivot_table(agent_state.reset_index(),index='Step',columns='State',aggfunc=np.size,fill_value=0)    
-    labels = ['Susceptible','Infected','Removed']
+    labels = ['Susceptible','Infected','Removed', 'NA']
     X.columns = labels[:len(X.columns)]
     return X
     
@@ -161,7 +161,7 @@ def plot_states(model,ax):
 pop=300
 steps=100
 st=time.time()
-model = InfectionModel(pop, 20, False, ptrans=0.5)
+model = InfectionModel(human_count=pop, random_spawn=True, save_plots=False, ptrans=0.5)
 for i in range(steps):
     model.step()
 print(time.time()-st)

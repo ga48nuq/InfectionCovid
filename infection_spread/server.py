@@ -24,7 +24,6 @@ def infection_spread_portrayal(agent):
         else:  # Suseptible
             portrayal["Shape"] = "infection_spread/resources/human.png"
 
-
     elif type(agent) is Exit:
         portrayal["Shape"] = "infection_spread/resources/exit.png"
         portrayal["scale"] = 1
