@@ -95,6 +95,16 @@ class InfectionModel(Model):
 
                     self.graph.add_edge(pos, neighbor)
 
+
+        # Collects statistics from our model run
+        self.datacollector = DataCollector(
+            {
+                "Susceptible": lambda m: self.count_human_status(m, Human.State.SUSCEPTIBLE),
+                "Infected": lambda m: self.count_human_status(m, Human.State.INFECTED),
+                "Removed": lambda m: self.count_human_status(m, Human.State.REMOVED)
+            }
+        )
+
  # Start placing human agents
        # for i in range(0, self.human_count):
         #    if self.random_spawn:  # Place human agents randomly
@@ -157,6 +167,17 @@ def plot_states(model,ax):
     X = get_column_data(model)
     X.plot(ax=ax,lw=3,alpha=0.8)
 
+@staticmethod
+def count_human_status(model, status):
+    """
+    Helper method to count the status of Human agents in the model
+    """
+    count = 0
+    for agent in model.schedule.agents:
+        if isinstance(agent, Human):
+            if agent.get_status() == status:
+                    count += 1
+    return count
 
 pop=300
 steps=100
