@@ -21,7 +21,7 @@ def infection_spread_portrayal(agent):
 
         if agent.status() == Human.State.INFECTED:  # Infected
             portrayal["Shape"] = "infection_spread/resources/human_infect.png"    
-        else:  # Suseptible
+        else:  # Susceptible
             portrayal["Shape"] = "infection_spread/resources/human.png"
 
     elif type(agent) is Exit:
