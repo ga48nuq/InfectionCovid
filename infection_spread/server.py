@@ -55,7 +55,7 @@ floor_plans = [f for f in listdir("infection_spread/floorplans") if path.isfile(
 # Specify the parameters changeable by the user, in the web interface
 model_params = {
     "floor_plan_file": UserSettableParameter("choice", "Floorplan", value=floor_plans[0], choices=floor_plans),
-    "human_count": UserSettableParameter("number", "Number Of Human Agents", value=10),
+    "human_count": UserSettableParameter("number", "Number Of Human Agents", value=30),
     "random_spawn": UserSettableParameter('checkbox', 'Spawn Agents at Random Locations', value=True),
     "save_plots": UserSettableParameter('checkbox', 'Save plots to file', value=True)
 }
