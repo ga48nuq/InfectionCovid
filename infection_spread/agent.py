@@ -28,15 +28,32 @@ class Human(Agent):
         INFECTED = 1
         REMOVED = 2
         NA = 3
-
+        
 
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
         self.traversable = False
-        self.age = self.random.normalvariate(20,40)        
+        self.age = self.random.normalvariate(20,40)
         self.state = State.SUSCEPTIBLE  
         self.infection_time = 0
         self.model = model
+
+    # @property
+    # def state(self):
+    #     return self._state
+
+    # @state.setter    
+    # def state(self, x):
+    #     self._state = x
+
+    # @property
+    # def infection_time(self):
+    #     return self._infection_time
+
+    # @infection_time.setter    
+    # def infection_time(self, x):
+    #     self._infection_time = x
+
     def get_position(self):
         return self.pos
 
@@ -49,12 +66,14 @@ class Human(Agent):
             moore=True,
             include_center=False)
         new_position = self.random.choice(possible_steps)
-        self.model.grid.move_agent(self, new_position)
+        if self.location_is_traversable(new_position):
+            self.model.grid.move_agent(self, new_position)
 
     def status(self):
         """Check infection status"""
         
-        if self.state == State.INFECTED:     
+        if self.state == State.INFECTED:
+
             drate = self.model.death_rate
             alive = np.random.choice([0,1], p=[drate,1-drate])
             if alive == 0:

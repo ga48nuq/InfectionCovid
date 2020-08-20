@@ -5,6 +5,7 @@ from mesa.visualization.UserParam import UserSettableParameter
 from .model import InfectionModel
 from .agent import Exit, State, Wall, Human, Door
 
+
 # Creates a visual portrayal of the model in the browser interface
 def infection_spread_portrayal(agent):
     if agent is None:
@@ -18,8 +19,7 @@ def infection_spread_portrayal(agent):
     if type(agent) is Human:
         portrayal["scale"] = 1
         portrayal["Layer"] = 5
-
-        if agent.status() == Human.State.INFECTED:  # Infected
+        if agent.state == State.INFECTED:  # Infected
             portrayal["Shape"] = "infection_spread/resources/human_infect.png"    
         else:  # Susceptible
             portrayal["Shape"] = "infection_spread/resources/human.png"
