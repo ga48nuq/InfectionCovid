@@ -21,6 +21,8 @@ def infection_spread_portrayal(agent):
         portrayal["Layer"] = 5
         if agent.state == State.INFECTED:  # Infected
             portrayal["Shape"] = "infection_spread/resources/human_infect.png"    
+        elif agent.state == State.REMOVED:  # Removed 
+            portrayal["Shape"] = None   
         else:  # Susceptible
             portrayal["Shape"] = "infection_spread/resources/human.png"
 
