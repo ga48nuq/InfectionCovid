@@ -88,7 +88,7 @@ class Human(Agent):
         
         cellmates = self.model.grid.get_cell_list_contents([self.pos])       
         if len(cellmates) > 1:
-            #other = self.random.choice(cellmates)
+            other = self.random.choice(cellmates)
             for other in cellmates:
                 #print (self.model.schedule.time,self.state,other.state)                
                 if self.random.random() > self.model.ptrans:
